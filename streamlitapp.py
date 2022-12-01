@@ -3,10 +3,10 @@ from transformers import AutoTokenizer, AutoModelForMaskedLM
 from transformers_interpret import SequenceClassificationExplainer
 import torch
 import numpy as np
-import nltk
-from nltk.tokenize import RegexpTokenizer
-nltk.download('stopwords')
-from nltk.corpus import stopwords
+# import nltk
+# from nltk.tokenize import RegexpTokenizer
+# nltk.download('stopwords')
+# from nltk.corpus import stopwords
 from streamlit import components
 
 
@@ -65,6 +65,7 @@ def main():
     # uploaded_file = st.file_uploader("Choose a file", "pdf")
     # if uploaded_file is not None:
     tect = st.text_input("enter text")
+    tokens = AutoTokenizer(tect)
     # tokans = tokeni.tokenize(tect)
     # filtered_sentence = [w for w in tokans if not w.lower() in stop_words]
 
@@ -85,14 +86,14 @@ def main():
         with st.spinner("Interpreting your text (This may take some time)"):
             if explanation_class_choice != "predicted":
                 word_attributions = cls_explainer(
-                    tect,
+                    tokens,
                     class_name=explanation_class_choice,
                     embedding_type=emb_type_num,
                     internal_batch_size=2,
                 )
             else:
                 word_attributions = cls_explainer(
-                    tect, embedding_type=emb_type_num, internal_batch_size=2
+                    tokens, embedding_type=emb_type_num, internal_batch_size=2
                 )
 
         if word_attributions:
