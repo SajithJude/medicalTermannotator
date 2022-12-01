@@ -3,11 +3,10 @@ from transformers import AutoTokenizer, AutoModelForMaskedLM
 from transformers_interpret import SequenceClassificationExplainer
 import torch
 import numpy as np
-# import nltk
-# from nltk.tokenize import RegexpTokenizer
-# nltk.download('stopwords')
-# from nltk.corpus import stopwords
-from streamlit import components
+import nltk
+from nltk.tokenize import RegexpTokenizer
+nltk.download('stopwords')
+from nltk.corpus import stopwords
 
 
 
@@ -59,24 +58,23 @@ def main():
     # my_expander = st.beta_expander(
 
     
-    # stop_words = set(stopwords.words('english'))
+    stop_words = set(stopwords.words('english'))
 
-    # tokeni = RegexpTokenizer('\w+')
+    tokeni = RegexpTokenizer('\w+')
     # uploaded_file = st.file_uploader("Choose a file", "pdf")
     # if uploaded_file is not None:
     tect = st.text_input("enter text")
-    tokens = tokenizer.tokenize(tect)
-    # tokans = tokeni.tokenize(tect)
-    # filtered_sentence = [w for w in tokans if not w.lower() in stop_words]
+    tokans = tokeni.tokenize(tect)
+    filtered_sentence = [w for w in tokans if not w.lower() in stop_words]
 
-    # filtered_sentence = []
+    filtered_sentence = []
     
-    # for w in tokans:
-    #     if w not in stop_words:
-    #         filtered_sentence.append(w)
-    # my_lst_str = ' '.join(map(str, filtered_sentence))
-    # info = (my_lst_str[:350] + '..') if len(tect) > 350 else tect
-    # st.write(info)
+    for w in tokans:
+        if w not in stop_words:
+            filtered_sentence.append(w)
+    my_lst_str = ' '.join(map(str, filtered_sentence))
+    info = (my_lst_str[:350] + '..') if len(my_lst_str) > 350 else my_lst_str
+    st.write(info)
 
 
     if st.button("Interpret document"):
@@ -86,14 +84,14 @@ def main():
         with st.spinner("Interpreting your text (This may take some time)"):
             if explanation_class_choice != "predicted":
                 word_attributions = cls_explainer(
-                    tokens,
+                    info,
                     class_name=explanation_class_choice,
                     embedding_type=emb_type_num,
                     internal_batch_size=2,
                 )
             else:
                 word_attributions = cls_explainer(
-                    tokens, embedding_type=emb_type_num, internal_batch_size=2
+                    info, embedding_type=emb_type_num, internal_batch_size=2
                 )
 
         if word_attributions:
