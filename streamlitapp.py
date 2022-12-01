@@ -17,18 +17,31 @@ tokenizer,model = get_model()
 user_input = st.text_area('Enter what the patient tells to Analyze depression')
 button = st.button("Analyze")
 
-# d = {
-    
-#   1:'Depressed',
-#   0:'No signs of depression'
-# }
+def encodeText(user_input):
+	
+
+	encoded_dict = tokenizer.encode_plus(
+					user_input,
+					add_special_tokens = True,
+                    max_length = 50,
+                    truncation = True,
+                    padding = "max_length",
+                    return_attention_mask = True,
+                    return_token_type_ids = False
+	)
+
+	input_ids = [encoded_dict['input_ids']]
+	attn_mask = [encoded_dict['attention_mask']]
+  	
+	return input_ids, attn_mask
 
 if user_input and button :
-    test_sample = tokenizer([user_input], padding=True, truncation=True, max_length=512,return_tensors='pt')
-    # test_sample
-    output = model(**test_sample)
-    st.write("Logits: ",output.logits)
-    y_pred = np.argmax(output.logits.detach().numpy(),axis=1)
-    st.write("Prediction: ",y_pred)
-    st.write(output)
+    def predict(model, input):
+        input_id, attn_mask = np.array(encodeText(input))
+        data = [input_id, attn_mask]
+
+        prediction = model.predict(data)
+        prediction = prediction[0].item() * 100
+
+        st.write(prediction)
 
