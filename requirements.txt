@@ -4,3 +4,4 @@ transformers
 sacremoses
 flair
 st-annotated-text
+BatchInference
