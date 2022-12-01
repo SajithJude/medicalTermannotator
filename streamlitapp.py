@@ -20,7 +20,6 @@ button = st.button("Analyze")
 
 
 if user_input and button :
-
     def encodeText(user_input):
         encoded_dict = tokenizer.encode_plus(
                         user_input,
@@ -43,7 +42,7 @@ if user_input and button :
         data = [input_id, attn_mask]
 
         prediction = model.predict(data)
-        prediction = prediction[0].item() * 100
+        # prediction = prediction[0].item() * 100
 
         st.write(prediction)
 
