@@ -84,14 +84,14 @@ def main():
         with st.spinner("Interpreting your text (This may take some time)"):
             if explanation_class_choice != "predicted":
                 word_attributions = cls_explainer(
-                    info,
+                    my_lst_str,
                     class_name=explanation_class_choice,
                     embedding_type=emb_type_num,
                     internal_batch_size=1,
                 )
             else:
                 word_attributions = cls_explainer(
-                    info, embedding_type=emb_type_num, internal_batch_size=1
+                    my_lst_str, embedding_type=emb_type_num, internal_batch_size=1
                 )
 
         if word_attributions:
