@@ -87,11 +87,11 @@ def main():
                     info,
                     class_name=explanation_class_choice,
                     embedding_type=emb_type_num,
-                    internal_batch_size=2,
+                    internal_batch_size=1,
                 )
             else:
                 word_attributions = cls_explainer(
-                    info, embedding_type=emb_type_num, internal_batch_size=2
+                    info, embedding_type=emb_type_num, internal_batch_size=1
                 )
 
         if word_attributions:
