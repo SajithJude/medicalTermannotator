@@ -30,4 +30,5 @@ if user_input and button :
     st.write("Logits: ",output.logits)
     y_pred = np.argmax(output.logits.detach().numpy(),axis=1)
     st.write("Prediction: ",y_pred)
+    st.write(output)
 
