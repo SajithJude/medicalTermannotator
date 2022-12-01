@@ -73,7 +73,7 @@ def main():
         if w not in stop_words:
             filtered_sentence.append(w)
     my_lst_str = ' '.join(map(str, filtered_sentence))
-    info = (my_lst_str[:350] + '..') if len(my_lst_str) > 350 else my_lst_str
+    info = (my_lst_str[:12] + '..') if len(my_lst_str) > 12 else my_lst_str
     st.write(info)
 
 
