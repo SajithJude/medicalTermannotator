@@ -65,7 +65,7 @@ def main():
     # uploaded_file = st.file_uploader("Choose a file", "pdf")
     # if uploaded_file is not None:
     tect = st.text_input("enter text")
-    tokens = AutoTokenizer(tect)
+    tokens = tokenizer.tokenize(tect)
     # tokans = tokeni.tokenize(tect)
     # filtered_sentence = [w for w in tokans if not w.lower() in stop_words]
 
