@@ -5,7 +5,7 @@ import torch
 import numpy as np
 import nltk
 from nltk.tokenize import RegexpTokenizer
-nltk.download('stopwords')
+# nltk.download('stopwords')
 from nltk.corpus import stopwords
 from streamlit import components
 
@@ -59,20 +59,19 @@ def main():
     # my_expander = st.beta_expander(
 
     
-    stop_words = set(stopwords.words('english'))
+    # stop_words = set(stopwords.words('english'))
 
     tokeni = RegexpTokenizer('\w+')
     # uploaded_file = st.file_uploader("Choose a file", "pdf")
     # if uploaded_file is not None:
     tect = st.text_input("enter text")
     tokans = tokeni.tokenize(tect)
-    filtered_sentence = [w for w in tokans if not w.lower() in stop_words]
+    # filtered_sentence = [w for w in tokans if not w.lower() in stop_words]
 
     filtered_sentence = []
     
-    for w in tokans:
-        if w not in stop_words:
-            filtered_sentence.append(w)
+    # for w in tokans:
+
     my_lst_str = ' '.join(map(str, filtered_sentence))
     info = (my_lst_str[:12] + '..') if len(my_lst_str) > 12 else my_lst_str
     st.write(info)
